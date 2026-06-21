@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HireAspire{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
+        .navbar { background: #1a1a2e !important; }
+        .navbar-brand { font-weight: 700; color: #e94560 !important; font-size: 1.4rem; }
+        .nav-link { color: rgba(255,255,255,0.8) !important; }
+        .nav-link:hover { color: #e94560 !important; }
+        .card { border: none; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+        .score-badge { font-size: 0.8rem; padding: 4px 10px; border-radius: 20px; }
+        .tag-badge { font-size: 0.72rem; background: #e8f0fe; color: #1a73e8; border-radius: 20px; padding: 3px 10px; margin: 2px; display: inline-block; }
+        .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 80px 0; }
+        .hero h1 { font-size: 3rem; font-weight: 800; }
+        .hero .accent { color: #e94560; }
+        .btn-primary { background: #e94560; border: none; }
+        .btn-primary:hover { background: #c73652; }
+        .score-bar { height: 6px; border-radius: 3px; background: #e0e0e0; overflow: hidden; }
+        .score-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #1a73e8, #e94560); }
+        .source-badge { font-size: 0.7rem; background: #f0f0f0; color: #666; border-radius: 10px; padding: 2px 8px; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}"><i class="bi bi-briefcase-fill"></i> HireAspire</a>
+        <div class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+            <a class="nav-link" href="{% url 'recommendations' %}"><i class="bi bi-stars"></i> Recommendations</a>
+            <a class="nav-link" href="{% url 'profile_setup' %}"><i class="bi bi-person-fill"></i> Profile</a>
+            <a class="nav-link" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<div class="container my-4">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+</div>
+
+{% block content %}{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

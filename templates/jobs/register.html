@@ -1,0 +1,25 @@
+{% extends 'jobs/base.html' %}
+{% block title %}Register - HireAspire{% endblock %}
+{% block content %}
+<div class="container" style="max-width:480px; margin-top:60px;">
+    <div class="card p-4">
+        <h3 class="mb-4 fw-bold"><i class="bi bi-person-plus-fill text-danger"></i> Create Account</h3>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label fw-semibold">{{ field.label }}</label>
+                <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}"
+                       class="form-control {% if field.errors %}is-invalid{% endif %}"
+                       {% if field.value %}value="{{ field.value }}"{% endif %}>
+                {% for error in field.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+        <p class="text-center mt-3 text-muted">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+</div>
+{% endblock %}
